@@ -9,9 +9,11 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<velocity.tools.version>2.0</velocity.tools.version>
 		<velocity.version>1.7</velocity.version>
+		<freemarker.version>2.3.22</freemarker.version>
 	</properties>
 
 	<dependencies>
+
 
 
 		<dependency>
@@ -20,11 +22,22 @@
 			<version>${velocity.version}</version>
 		</dependency>
 
+
 		<dependency>
 			<groupId>org.apache.velocity</groupId>
 			<artifactId>velocity-tools</artifactId>
 			<version>${velocity.tools.version}</version>
 		</dependency>
+
+
+
+
+		<dependency>
+			<groupId>org.freemarker</groupId>
+			<artifactId>freemarker</artifactId>
+			<version>${freemarker.version}</version>
+		</dependency>
+
 
 
 

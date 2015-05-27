@@ -1,0 +1,16 @@
+
+public class $tablename
+{
+	#foreach($key in $map.keys())
+		private String $key;
+		#set($value=$map.get($key))
+    	public String get$value() {
+			return $key;
+		}
+		public void set$value(String $key) {
+			this.$key = $key;
+		}
+    #end	
+}
+		
+							 
