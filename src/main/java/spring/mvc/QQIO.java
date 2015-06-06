@@ -8,7 +8,7 @@ public class QQIO {
 
 	public Logger	logger=Logger.getLogger(QQIO.class);
 	
-	private int stat=State.start;
+	private int stat = State.start;
 
 	public int getStat() {
 		return stat;
