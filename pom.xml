@@ -13,9 +13,39 @@
 		<velocity.version>1.7</velocity.version>
 		<freemarker.version>2.3.22</freemarker.version>
 		<spring.version>4.0.6.RELEASE</spring.version>
+		<hibernate.version>4.2.1.Final</hibernate.version>
+
 	</properties>
 
 	<dependencies>
+	
+		<!-- jpa -->
+		<!--
+			<dependency>
+			<groupId>javax.persistence</groupId>
+			<artifactId>persistence-api</artifactId>
+			<version>1.0.2</version>
+			</dependency>
+		-->
+		<dependency>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.0-api</artifactId>
+			<version>1.0.1.Final</version>
+		</dependency>
+		
+		
+		<!-- 
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-entitymanager</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency> -->
+
 
 		<dependency>
 			<groupId>jdk.tools</groupId>
