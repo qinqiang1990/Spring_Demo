@@ -1,0 +1,21 @@
+
+ <shiro:hasRole name="admin">
+ <!— 有权限—>
+ </shiro:hasRole>
+
+ Subject subject = SecurityUtils.getSubject();
+ if(subject.hasRole(“admin”)) {
+ //有权限
+ } else {
+ //无权限
+ }
+
+
+ @RequiresRoles("admin")
+ public void hello() {
+	 // 有权限
+ }
+ 
+ 
+ [urls]
+/admin/** = authc, roles[admin], perms["permission1"]
