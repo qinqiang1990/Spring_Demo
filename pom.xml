@@ -14,10 +14,20 @@
 		<freemarker.version>2.3.22</freemarker.version>
 		<spring.version>4.0.6.RELEASE</spring.version>
 		<hibernate.version>4.2.1.Final</hibernate.version>
+		<ehcache.version>2.6.11</ehcache.version>
 
 	</properties>
 
 	<dependencies>
+	
+	
+		<!-- ehcache -->
+		<dependency>
+			<groupId>net.sf.ehcache</groupId>
+			<artifactId>ehcache-core</artifactId>
+			<version>${ehcache.version}</version>
+		</dependency>
+
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
