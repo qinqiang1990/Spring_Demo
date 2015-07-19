@@ -25,7 +25,7 @@ public class MyShiro extends AuthorizingRealm {
 		String loginName = (String) principals.fromRealm(getName()).iterator()
 				.next();
 		// 到数据库查是否有此对象
-		User user = userService.findByName(loginName);
+		User user; // userService.findByName(loginName);
 		if (user != null) {
 			// 权限信息对象info,用来存放查出的用户的所有的角色（role）及权限（permission）
 			SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
@@ -51,7 +51,7 @@ public class MyShiro extends AuthorizingRealm {
 		// UsernamePasswordToken对象用来存放提交的登录信息
 		UsernamePasswordToken token = (UsernamePasswordToken) authenticationToken;
 		// 查出是否有此用户
-		User user = userService.findByName(token.getUsername());
+		User user// = userService.findByName(token.getUsername());
 		if (user != null) {
 			// 若存在，将此用户存放到登录认证info中
 			return new SimpleAuthenticationInfo(user.getUsername(),
