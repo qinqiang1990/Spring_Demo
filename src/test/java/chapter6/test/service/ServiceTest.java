@@ -1,16 +1,13 @@
-package com.github.zhangkaitao.shiro.chapter6.service;
+package chapter6.test.service;
 
-import com.github.zhangkaitao.shiro.chapter6.BaseTest;
-import junit.framework.Assert;
+ import junit.framework.Assert;
+
 import org.junit.Test;
 
-import java.util.Set;
+import chapter6.test.BaseTest;
 
-/**
- * <p>User: Zhang Kaitao
- * <p>Date: 14-1-28
- * <p>Version: 1.0
- */
+import java.util.Set;
+ 
 public class ServiceTest extends BaseTest {
 
 
