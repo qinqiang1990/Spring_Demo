@@ -1,4 +1,4 @@
-package com.qq.service;
+/*package com.qq.service;
 
 import java.util.List;
 
@@ -15,9 +15,9 @@ import shrio.Role;
 import shrio.User;
 
 public class MyShiro extends AuthorizingRealm {
-	/** 
+	*//** 
 	 * 授权 
-	 */
+	 *//*
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(
 			PrincipalCollection principals) {
@@ -41,9 +41,9 @@ public class MyShiro extends AuthorizingRealm {
 		return null;
 	}
 
-	/** 
+	*//** 
 	 *  验证
-	 */
+	 *//*
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(
 			AuthenticationToken authenticationToken)
@@ -60,7 +60,7 @@ public class MyShiro extends AuthorizingRealm {
 		return null;
 	}
 
-	/*
+	
 	 * public AuthenticationInfo getAuthenticationInfo(AuthenticationToken
 	 * token) throws AuthenticationException { // TODO Auto-generated method
 	 * stub String username = (String) token.getPrincipal(); // 得到用户名 String
@@ -77,5 +77,6 @@ public class MyShiro extends AuthorizingRealm {
 	 * public boolean supports(AuthenticationToken token) { // TODO
 	 * Auto-generated method stub // 仅支持UsernamePasswordToken类型的Token return
 	 * token instanceof UsernamePasswordToken; }
-	 */
+	 
 }
+*/
