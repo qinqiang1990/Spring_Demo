@@ -1,4 +1,4 @@
-package shrio.tt100;
+/*package shrio.tt100;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -18,11 +18,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.hfstu.weixin.service.RSAService;
 
-/**
+*//**
  * Filter - 权限认证
  * 
  * @version 3.0
- */
+ *//*
 public class AuthenticationFilter extends FormAuthenticationFilter {
 
 	@Override
@@ -70,4 +70,4 @@ public class AuthenticationFilter extends FormAuthenticationFilter {
 
 
 
-}
+}*/

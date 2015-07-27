@@ -1,12 +1,10 @@
-package shrio.tt100;
+/*package shrio.tt100;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import javax.annotation.Resource;
-
-import org.apache.commons.lang3.StringUtils;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
@@ -25,11 +23,11 @@ import com.hfstu.weixin.service.ICustomService;
 import com.hfstu.weixin.service.IRoleService;
 import com.hfstu.weixin.service.IRoleUserService;
 
-/**
+*//**
  * 权限认证
  * 
  * @version 3.0
- */
+ *//*
 public class AuthenticationRealm extends AuthorizingRealm {
 	
 	@Resource
@@ -38,13 +36,13 @@ public class AuthenticationRealm extends AuthorizingRealm {
 	private IRoleUserService roleUserService;
 	@Resource
 	private IRoleService roleService;
-	/**
+	*//**
 	 * 获取认证信息
 	 * 
 	 * @param token
 	 *            令牌
 	 * @return 认证信息
-	 */
+	 *//*
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(org.apache.shiro.authc.AuthenticationToken token) {
 		UsernamePasswordToken usernamePasswordToken = (UsernamePasswordToken) token;
@@ -60,13 +58,13 @@ public class AuthenticationRealm extends AuthorizingRealm {
 		}
 	}
 
-	/**
+	*//**
 	 * 获取授权信息
 	 * 
 	 * @param principals
 	 *            principals
 	 * @return 授权信息
-	 */
+	 *//*
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		Principal principal = (Principal) principals.fromRealm(getName()).iterator().next();
@@ -96,4 +94,4 @@ public class AuthenticationRealm extends AuthorizingRealm {
 		return null;
 	}
 
-}
+}*/
