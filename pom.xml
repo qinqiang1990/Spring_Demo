@@ -17,10 +17,18 @@
 		<hibernate.version>4.2.1.Final</hibernate.version>
 		<ehcache.version>2.6.11</ehcache.version>
 		<commons-net.version>3.3</commons-net.version>
+		<aspectj.version>1.5.4</aspectj.version>
 
 	</properties>
 
 	<dependencies>
+
+		<dependency>
+			<groupId>aspectj</groupId>
+			<artifactId>aspectjrt</artifactId>
+			<version>${aspectj.version}</version>
+		</dependency>
+
 
 		<dependency>
 			<groupId>commons-net</groupId>

@@ -40,6 +40,7 @@ public class LoginServlet extends HttpServlet {
 		// 指定FreeMarker模板文件的位置
 		cfg.setServletContextForTemplateLoading(getServletContext(),
 				"/WEB-INF/templates");
+	 
 	}
 
 	@Override

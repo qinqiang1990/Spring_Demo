@@ -4,7 +4,8 @@ import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import javax.servlet.http.*;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
@@ -19,33 +20,31 @@ import org.springframework.transaction.interceptor.TransactionAspectSupport;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.hfstu.framework.core.utils.spring.SpringContextHolder;
-import com.hfstu.weixin.model.User;
-
 @Aspect
 @Component
 public class MyAOPAspect {
 	// AbstractAction的子类被@RequestMapping注解的方法
-	//@Around("within(cn.org.sysu.cems.utils.superclass.AbstractAction+) && @annotation(org.springframework.web.bind.annotation.RequestMapping)")
+	// @Around("within(cn.org.sysu.cems.utils.superclass.AbstractAction+) && @annotation(org.springframework.web.bind.annotation.RequestMapping)")
+
+	@Pointcut("within(@org.springframework.stereotype.Controller )")
+	public void cutController() {
+	}
+
+	@Around("cutController()")
+	public Object recordSysLog(ProceedingJoinPoint point) throws Throwable {
+		System.out
+				.println("================================================================");
+		return point.proceed();
+	}
+
+	@Pointcut("execution(public  com.hfstu.weixin.service.impl.UserServiceImpl.getSafeLevel(..))")
+	public void serviceAspect() {
+	}
 
 	/*
-	 * @Pointcut("within(@org.springframework.stereotype.Controller *)") public
-	 * void cutController() { }
+	 * 前置通知 用于拦截Service层记录用户的操作
 	 * 
-	 * @Around("cutController()") public Object recordSysLog(ProceedingJoinPoint
-	 * point) throws Throwable { System.out
-	 * .println("================================================================"
-	 * ); return point.proceed(); }
-	 * 
-	 * @Pointcut(
-	 * "execution(public * com.hfstu.weixin.service.impl.UserServiceImpl.getSafeLevel(..))"
-	 * ) public void serviceAspect() { }
-	 */
-
-	/** 
-	 * 前置通知 用于拦截Service层记录用户的操作 
-	 * 
-	 * @param joinPoint 切点 
+	 * @param joinPoint 切点
 	 */
 	@After("serviceAspect()")
 	public void doAfter(JoinPoint joinPoint) {
@@ -54,21 +53,21 @@ public class MyAOPAspect {
 				.getRequestAttributes()).getRequest();
 		HttpSession session = request.getSession();
 		// 读取session中的用户
-		User user = (User) session.getAttribute("user");
+		/* User user = (User) session.getAttribute("user"); */
 		// 请求的IP
 		String ip = request.getRemoteAddr();
 		try {
-			// *========控制台输出=========*//
+			// ========控制台输出=========//
 			System.out.println("=====前置通知开始=====");
 			System.out.println("请求方法:"
 					+ (joinPoint.getTarget().getClass().getName() + "."
 							+ joinPoint.getSignature().getName() + "()"));
 
-			System.out.println("请求人:" + user.getUsername());
+			/* System.out.println("请求人:" + user.getUsername()); */
 			System.out.println("请求IP:" + ip);
 
 			checkSecurity(joinPoint);
-			// *========数据库日志=========*//
+			// ========数据库日志=========//
 
 			System.out.println("=====前置通知结束=====");
 		} catch (Exception e) {
@@ -117,7 +116,7 @@ public class MyAOPAspect {
 		} catch (Throwable e) {
 			// TODO Auto-generated catch block
 			TransactionAspectSupport.currentTransactionStatus()
-					.setRollbackOnly();//回滚
+					.setRollbackOnly();// 回滚
 			e.printStackTrace();
 		}
 		Calendar end = Calendar.getInstance();
@@ -151,5 +150,5 @@ public class MyAOPAspect {
 		return aop;
 	}
 
-	// 	<aop:aspectj-autoproxy proxy-target-class="true" />
+	// <aop:aspectj-autoproxy proxy-target-class="true" />
 }
