@@ -43,11 +43,11 @@ if else if else语句测试：
 ----------------------------------------------------
 测试list指令：
 <#list lst as dizhi >
-	<b>dizhi</b> <br/>
+	<b>${dizhi.country}--${dizhi.city}</b> <br/>
 </#list>
 ----------------------------------------------------
 测试include指令：
-<#include "included.txt" />
+<#   "included.txt" />
 ----------------------------------------------------
 <#macro m1>   <#--定义指令m1 -->
 	<b>aaabbbccc</b>
