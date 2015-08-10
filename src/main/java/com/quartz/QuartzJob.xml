@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+<bean id="scheduleNotifyService2" class="cn.tt100.dcw.service.quartz.impl.ScheduleNotifyServiceImpl">
+		<property name="restTemplate" ref="restTemplate2"></property>
+		<property name="jmsServer" value="${jms.server.host}"></property>
+	</bean>
+	
+	 <bean id="scheduler" autowire="no" class="org.springframework.scheduling.quartz.SchedulerFactoryBean">  
+        <property name="dataSource" ref="dataSource" />
+		<property name="configLocation" value="classpath:quartz.properties" />
+		 <property name="schedulerContextAsMap">    
+            <map>    
+                <description>schedulerContextAsMap</description>    
+                <entry key="scheduleNotifyService2" value-ref="scheduleNotifyService2"/>
+            </map>
+        </property>  
+		<property name="applicationContextSchedulerContextKey" value="applicationContext"/>    
+    </bean>  
+
+package cn.tt100.dcw.web;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import org.quartz.DisallowConcurrentExecution;
+import org.quartz.Job;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
+import org.quartz.SchedulerContext;
+import org.quartz.SchedulerException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
+
+import cn.tt100.dcw.dto.ScheduleJob;
+import cn.tt100.dcw.service.TestBean;
+import cn.tt100.dcw.service.quartz.ScheduleNotifyService;
+import cn.tt100.dcw.web.order.OrderController;
+
+/**
+ * 定时任务工作类
+ * 
+ * @author ty
+ * @date 2015年1月13日
+ */
+@DisallowConcurrentExecution
+public class NotifyOfflineCancelBooking implements Job {
+  
+  private static Logger logger = LoggerFactory.getLogger(NotifyOfflineCancelBooking.class);
+
+  public void execute(JobExecutionContext context) throws JobExecutionException {
+    try {
+    ScheduleJob scheduleJob = (ScheduleJob) context.getMergedJobDataMap().get("scheduleJob");
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分ss秒");
+    String[] bookingid = scheduleJob.getName().split("------");
+
+//    System.out.println("任务名称 = [" + scheduleJob.getName() + "]" + " 订单uuid = ["
+//        + bookingid[1] + "]" + " 在 " + dateFormat.format(new Date()) + " 时运行");
+    logger.info("任务名称 = [" + scheduleJob.getName() + "]" + " 订单uuid = ["
+        + bookingid[1] + "]" + " 在 " + dateFormat.format(new Date()) + " 时运行");
+
+      // 获取JobExecutionContext中的service对象
+      SchedulerContext schCtx = context.getScheduler().getContext();
+      // 获取Spring中的上下文
+      ApplicationContext appCtx = (ApplicationContext) schCtx.get("applicationContext");
+      ScheduleNotifyService bean = (ScheduleNotifyService) appCtx.getBean("scheduleNotifyService2");
+      bean.cancelBooking(bookingid[0], bookingid[1]);
+    } catch (SchedulerException e1) {
+      // TODO 尚未处理异常
+      logger.error("定时器：" + e1.toString());
+      e1.printStackTrace();
+    }
+
+  }
+}
