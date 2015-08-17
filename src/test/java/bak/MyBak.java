@@ -3,6 +3,7 @@ package bak;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -14,11 +15,15 @@ public class MyBak {
 	@Test
 	public void bak() throws Exception {
 		// TODO Auto-generated method stub
-		//cmd  /c  mysqldump -uroot -p111111 shiro > D:\\e.sql
-		//String command = "cmd  /c  dir   c:\\ ";
-		String command = "cmd  /c  mysqldump ";
+		// String command = "cmd  /c  dir   c:\\ ";
+		StringBuffer sb = new StringBuffer();
+		sb.append("cmd  /c ");
+		sb.append("C:\\mysqldump");
+		sb.append(" -uroot ");
+		sb.append(" -pqin1990 ");
+		sb.append(" shiro ");
+		String command = sb.toString();
 		Process process = Runtime.getRuntime().exec(command);
-
 		BufferedReader br = new BufferedReader(new InputStreamReader(
 				process.getInputStream(), "gbk"));
 		String line = null;
@@ -31,7 +36,14 @@ public class MyBak {
 	@Test
 	public void bakSaveFile() throws Exception {
 		// TODO Auto-generated method stub
-		String command = "cmd  /c  dir   c:\\ ";
+		// String command = "cmd  /c  dir   c:\\ ";
+		StringBuffer sb = new StringBuffer();
+		sb.append("cmd  /c ");
+		sb.append("C:\\mysqldump");
+		sb.append(" -uroot ");
+		sb.append(" -pqin1990 ");
+		sb.append(" shiro ");
+		String command = sb.toString();
 		Process process = Runtime.getRuntime().exec(command);
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(
@@ -53,15 +65,33 @@ public class MyBak {
 	@Test
 	public void MyBak() throws Exception {
 		// TODO Auto-generated method stub
-		String command = "cmd  /c  dir   c:\\ ";
+		String command = "cmd  /c  C:\\mysql -uroot -pqin1990 shiro";
 		Process process = Runtime.getRuntime().exec(command);
 
-		BufferedReader br = new BufferedReader(new InputStreamReader(
-				process.getInputStream(), "gbk"));
+		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(
+				process.getOutputStream()));
+
+		BufferedReader br = new BufferedReader(new FileReader(this.getClass()
+				.getResource("/bakfile/a.txt").getPath()));
+
 		String line = null;
 		while ((line = br.readLine()) != null) {
 			System.out.println(line);
+			bw.write(line);
+			bw.newLine();
 		}
+		bw.close();
 		br.close();
+
 	}
+
+	@Test
+	public void doZip() throws Exception {
+		// TODO Auto-generated method stub
+		String path = "d:\\zip\\1";
+		String zip = "d:\\zip\\1.zip";
+		compress.common.doCompression(zip, path);
+
+	}
+
 }
