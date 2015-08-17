@@ -14,7 +14,9 @@ public class MyBak {
 	@Test
 	public void bak() throws Exception {
 		// TODO Auto-generated method stub
-		String command = "cmd  /c  dir   c:\\ ";
+		//cmd  /c  mysqldump -uroot -p111111 shiro > D:\\e.sql
+		//String command = "cmd  /c  dir   c:\\ ";
+		String command = "cmd  /c  mysqldump ";
 		Process process = Runtime.getRuntime().exec(command);
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(
@@ -36,12 +38,13 @@ public class MyBak {
 				process.getInputStream(), "gbk"));
 
 		BufferedWriter bw = new BufferedWriter(new FileWriter(this.getClass()
-				.getResource("/bak/a.txt").getPath()));
+				.getResource("/bakfile/a.txt").getPath()));
 
 		String line = null;
 		while ((line = br.readLine()) != null) {
 			System.out.println(line);
 			bw.write(line);
+			bw.newLine();
 		}
 		br.close();
 		bw.close();
