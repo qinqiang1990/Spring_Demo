@@ -94,4 +94,40 @@ public class MyBak {
 
 	}
 
+
+	@Test
+	public void doTar() throws Exception {
+		// TODO Auto-generated method stub
+		String path = "d:\\zip\\1";
+		String tar = "d:\\zip\\1.tar";
+		compress.common.doTar(tar, path);
+
+	}	
+	@Test
+	public void doComZip() throws Exception {
+		// TODO Auto-generated method stub
+		String zip = "d:\\zip\\1.tar.gz";
+		String tar = "d:\\zip\\1.tar";
+		compress.common.doCompressionGZip(zip, tar);
+		
+	}	
+	@Test
+	public void doUnZip() throws Exception {
+		// TODO Auto-generated method stub
+		String gzip = "d:\\zip\\1.tar.gz";
+		String tar = "d:\\zip\\1.tar";
+		compress.common.doUnGZip(gzip, tar);
+		
+	}	
+	
+	@Test
+	public void doDecomTar() throws Exception {
+		// TODO Auto-generated method stub
+		String path = "d:\\zip\\2";
+		String tar = "d:\\zip\\1.tar";
+		compress.common.doDecompressionTar(tar, path);
+
+	}
+
+	
 }

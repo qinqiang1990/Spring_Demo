@@ -2,22 +2,21 @@ package compress;
 
 import java.io.*;
 import java.util.Enumeration;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 import org.apache.commons.compress.archivers.*;
 import org.apache.commons.compress.archivers.tar.TarArchiveEntry;
 import org.apache.commons.compress.archivers.tar.TarArchiveInputStream;
+import org.apache.commons.compress.archivers.tar.TarArchiveOutputStream;
 import org.apache.commons.compress.archivers.zip.*;
 import org.apache.commons.compress.utils.IOUtils;
 
 public class common {
 
-	public static int BUF = 1024;
-
 	public static void doCompression(String zip, String path) throws Exception {
-		ZipArchiveOutputStream zos = (ZipArchiveOutputStream) new ArchiveStreamFactory()
-				.createArchiveOutputStream("zip", new FileOutputStream(zip));
-		// or new ZipArchiveOutputStream(new FileOutputStream(path))
-		// or new TarArchiveOutputStream(new FileOutputStream(path))
+		ZipArchiveOutputStream zos = new ZipArchiveOutputStream(
+				new FileOutputStream(zip));
 		zos.setEncoding("GBK");
 		File of = new File(path);
 		if (of.isFile())
@@ -65,27 +64,51 @@ public class common {
 		file.close();
 	}
 
-	// 这是更一般的解压处理
-	public static void doTar(String tar, String path) throws IOException {
-		TarArchiveInputStream tis = new TarArchiveInputStream(
-				new FileInputStream(tar));
-		TarArchiveEntry te = null;
-		while ((te = tis.getNextTarEntry()) != null) {
-			File target = new File(path, te.getName());
-			if (te.isDirectory()) {
-				target.mkdirs();
-				continue;
-			} else
-				target.getParentFile().mkdirs();
+	public static void doTar(String tar, String path)
+			throws Exception {
+		TarArchiveOutputStream tos =new TarArchiveOutputStream(new FileOutputStream(tar),"GBK");
+		File of = new File(path);
+		for (File off : of.listFiles()) {
+			FileInputStream fis = new FileInputStream(off);
+			TarArchiveEntry tae = new TarArchiveEntry(off.getName());
+			tae.setSize(off.length());
+			tos.putArchiveEntry(tae);
+			IOUtils.copy(fis, tos);
+			fis.close();
+			tos.closeArchiveEntry();
+		}
+		tos.finish();
+		tos.close();
+	}
 
-			FileOutputStream fos = new FileOutputStream(target); // 将当前entry写入文件
-			byte[] buf = new byte[BUF];
-			int len;
-			while ((len = tis.read(buf)) != -1) {
-				fos.write(buf, 0, len);
-			}
+	public static void doDecompressionTar(String tar, String path)
+			throws Exception {
+		TarArchiveInputStream tais =new TarArchiveInputStream(new FileInputStream(tar));
+		TarArchiveEntry tae=null;
+		while ((tae=tais.getNextTarEntry())!=null) {
+			FileOutputStream fos = new FileOutputStream(path+File.separator+tae.getName());
+			IOUtils.copy(tais, fos);
 			fos.close();
 		}
-		tis.close();
+		tais.close();
 	}
+	public static void doCompressionGZip(String zip, String path)
+			throws IOException {
+		FileOutputStream fos = new FileOutputStream(zip);
+		GZIPOutputStream gzos = new GZIPOutputStream(fos);
+		FileInputStream fis = new FileInputStream(path);
+		IOUtils.copy(fis, gzos);
+		fis.close();
+		gzos.close();
+	}
+	public static void doUnGZip(String gzip, String tar)
+			throws IOException {
+		FileInputStream fis = new FileInputStream(gzip);
+		GZIPInputStream gzis = new GZIPInputStream(fis);
+		FileOutputStream fos = new FileOutputStream(tar);
+		IOUtils.copy(gzis,fos);
+		fos.close();
+		gzis.close();
+	}
+
 }
